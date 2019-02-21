@@ -1,13 +1,16 @@
 import math
-class TaskDefinition: 
-    rows:int
-    columns:int
-    minimumIngr:int
-    maxCells:int
+
+
+class TaskDefinition:
+    rows: int
+    columns: int
+    minimumIngr: int
+    maxCells: int
+
 
 def getTaskDefinitions(fileLines):
     taskDefinition = TaskDefinition()
-    definitions= fileLines[0]
+    definitions = fileLines[0]
     fileLines.remove(fileLines[0])
     taskDefinitionData = definitions.split(" ")
     taskDefinition.rows = int(taskDefinitionData[0])
@@ -15,12 +18,13 @@ def getTaskDefinitions(fileLines):
     taskDefinition.minimumIngr = int(taskDefinitionData[2])
     taskDefinition.maxCells = int(taskDefinitionData[3])
     return taskDefinition
+
+
 statementsFolderPath = "C:\HashCodeStatements\\"
 fileNames = [
     "a_example.in",
     "b_small.in",
     "c_medium.in",
-    
     "d_big.in"
 ]
 with open(statementsFolderPath + fileNames[0], 'r') as myfile:
@@ -29,3 +33,9 @@ with open(statementsFolderPath + fileNames[0], 'r') as myfile:
 taskDefinition = getTaskDefinitions(fileLines)
 print(f'{taskDefinition.columns}')
 print(f'{len(fileLines)}')
+
+pizza = []
+for line in fileLines:
+    ingrs = line.split(' ')
+    pizza.append(ingrs)
+print(f'{pizza[1][2])

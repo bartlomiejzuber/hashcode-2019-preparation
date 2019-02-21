@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 
 class TaskDefinition:
@@ -6,11 +7,14 @@ class TaskDefinition:
     columns: int
     minimumIngr: int
     maxCells: int
+
+
 class SliceDefinition:
     startRowIndex: int
-    lastRowIndex: int
+    endRowIndex: int
     startColIndex: int
     endColIndex: int
+
 
 def getTaskDefinitions(fileLines):
     taskDefinition = TaskDefinition()
@@ -42,22 +46,29 @@ pizza = []
 for line in fileLines:
     pizzaLine = [x.strip() for x in line.replace('\n', '')]
     pizza.append(pizzaLine)
-#print(f'{pizza}')
+# print(f'{pizza}')
 
-#dzialamy
-
+# dzialamy
+npPizza = np.array(pizza)
 numberOfSlices = 0
 sliceToCut = SliceDefinition()
 sliceToCut.startRowIndex = 0
-sliceToCut.lastRowIndex = 0
+sliceToCut.endRowIndex = 0
 sliceToCut.startColIndex = 0
 sliceToCut.endColIndex = 0
 slices = []
 
 while (1):
+    mushroomsCount = 0
+    tomatosCount =0
+       tempSlice = npPizza[sliceToCut.startRowIndex:(
+        sliceToCut.endRowIndex+1), sliceToCut.startColIndex:(sliceToCut.endColIndex+1)]
+    for rowIndex, rowValue in enumerate(tempSlice):
+        for columnIndex, ing in enumerate(rowValue):
+            if (ing == 'T')
+                tomatosCount += 1
+            if (ing == 'M')
+                mushroomsCount += 1
+            
+    break
 
-#for rowIndex, rowValue in enumerate(pizza):
- #   print(f'{rowValue}')
-    for columnIndex, columnValue in enumerate(rowValue):
-  #      if (rowValue[columnIndex] < sliceToCut.IsComplete)
-  ##          taskDefinition.minimumIngr

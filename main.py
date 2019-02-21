@@ -62,8 +62,9 @@ sliceToCut.startColIndex = 0
 sliceToCut.endColIndex = 0
 sliceToCut.ready = False
 sliceToCut.rowExtended = False
-while ():
-
+i=0
+while (i<20):
+    i=i+1
     mushroomsCount = 0
     tomatosCount = 0
     tempSlice = npPizza[sliceToCut.startRowIndex:(
@@ -71,6 +72,7 @@ while ():
     print(f'{tempSlice}')
     for rowIndex, rowValue in enumerate(tempSlice):
         for columnIndex, ing in enumerate(rowValue):
+            npPizza[rowIndex+ sliceToCut.startRowIndex][columnIndex+ sliceToCut.startColIndex]="X"
             if (ing == 'T'):
                 tomatosCount += 1
             if (ing == 'M'):
@@ -81,6 +83,11 @@ while ():
     if (sliceToCut.ready == False):
         if (sliceToCut.rowExtended == False):
             sliceToCut.endRowIndex += 1
+            sliceToCut.rowExtended = True
         else:
             sliceToCut.endColIndex += 1
+            sliceToCut.rowExtended = False
+    print(f'{sliceToCut.endRowIndex}')
+    print(f'{sliceToCut.endColIndex}')
+print(f'{npPizza}')
 print(f'{sliceToCut}')

@@ -14,6 +14,8 @@ class SliceDefinition:
     endRowIndex: int
     startColIndex: int
     endColIndex: int
+    ready: bool
+    rowExtended: bool
 
 
 def getTaskDefinitions(fileLines):
@@ -51,24 +53,29 @@ for line in fileLines:
 # dzialamy
 npPizza = np.array(pizza)
 numberOfSlices = 0
+slices = []
+
 sliceToCut = SliceDefinition()
 sliceToCut.startRowIndex = 0
 sliceToCut.endRowIndex = 0
 sliceToCut.startColIndex = 0
 sliceToCut.endColIndex = 0
-slices = []
-
+sliceToCut.ready = False
+sliceToCut.rowExtended = Fa
 while (1):
+
     mushroomsCount = 0
-    tomatosCount =0
-       tempSlice = npPizza[sliceToCut.startRowIndex:(
+    tomatosCount = 0
+    tempSlice = npPizza[sliceToCut.startRowIndex:(
         sliceToCut.endRowIndex+1), sliceToCut.startColIndex:(sliceToCut.endColIndex+1)]
     for rowIndex, rowValue in enumerate(tempSlice):
         for columnIndex, ing in enumerate(rowValue):
-            if (ing == 'T')
+            if (ing == 'T'):
                 tomatosCount += 1
-            if (ing == 'M')
+            if (ing == 'M'):
                 mushroomsCount += 1
-            
-    break
+    if (mushroomsCount >= taskDefinition.minimumIngr and tomatosCount >= taskDefinition.minimumIngr):
+        sliceToCut.ready = True
+    if (sliceToCut.ready == False):
 
+    break

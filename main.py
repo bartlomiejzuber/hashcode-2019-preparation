@@ -38,7 +38,7 @@ fileNames = [
     "d_big.in"
 ]
 with open(statementsFolderPath + fileNames[0], 'r') as myfile:
-    #data = myfile.read()
+    # data = myfile.read()
     fileLines = myfile.readlines()
 taskDefinition = getTaskDefinitions(fileLines)
 print(f'{taskDefinition.columns}')
@@ -61,7 +61,7 @@ sliceToCut.endRowIndex = 0
 sliceToCut.startColIndex = 0
 sliceToCut.endColIndex = 0
 sliceToCut.ready = False
-sliceToCut.rowExtended = Fa
+sliceToCut.rowExtended = False
 while (1):
 
     mushroomsCount = 0
@@ -76,6 +76,10 @@ while (1):
                 mushroomsCount += 1
     if (mushroomsCount >= taskDefinition.minimumIngr and tomatosCount >= taskDefinition.minimumIngr):
         sliceToCut.ready = True
+        break
     if (sliceToCut.ready == False):
-
-    break
+        if (sliceToCut.rowExtended == False):
+            sliceToCut.endRowIndex += 1
+        else:
+            sliceToCut.endColIndex += 1
+print(f'{sliceToCut}')

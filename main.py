@@ -6,7 +6,11 @@ class TaskDefinition:
     columns: int
     minimumIngr: int
     maxCells: int
-
+class SliceDefinition:
+    startRowIndex: int
+    lastRowIndex: int
+    startColIndex: int
+    endColIndex: int
 
 def getTaskDefinitions(fileLines):
     taskDefinition = TaskDefinition()
@@ -38,4 +42,22 @@ pizza = []
 for line in fileLines:
     pizzaLine = [x.strip() for x in line.replace('\n', '')]
     pizza.append(pizzaLine)
-print(f'{pizza}')
+#print(f'{pizza}')
+
+#dzialamy
+
+numberOfSlices = 0
+sliceToCut = SliceDefinition()
+sliceToCut.startRowIndex = 0
+sliceToCut.lastRowIndex = 0
+sliceToCut.startColIndex = 0
+sliceToCut.endColIndex = 0
+slices = []
+
+while (1):
+
+#for rowIndex, rowValue in enumerate(pizza):
+ #   print(f'{rowValue}')
+    for columnIndex, columnValue in enumerate(rowValue):
+  #      if (rowValue[columnIndex] < sliceToCut.IsComplete)
+  ##          taskDefinition.minimumIngr

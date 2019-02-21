@@ -36,6 +36,6 @@ print(f'{len(fileLines)}')
 
 pizza = []
 for line in fileLines:
-    ingrs = line.split(' ')
-    pizza.append(ingrs)
-print(f'{pizza[1][2])
+    pizzaLine = [x.strip() for x in line.replace('\n', '')]
+    pizza.append(pizzaLine)
+print(f'{pizza}')

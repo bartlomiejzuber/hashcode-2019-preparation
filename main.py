@@ -54,7 +54,7 @@ for line in fileLines:
 npPizza = np.array(pizza)
 numberOfSlices = 0
 slices = []
-
+while*1
 sliceToCut = SliceDefinition()
 sliceToCut.startRowIndex = 0
 sliceToCut.endRowIndex = 0
@@ -63,20 +63,20 @@ sliceToCut.endColIndex = 0
 sliceToCut.ready = False
 sliceToCut.rowExtended = False
 i=0
-while (i<20):
+mushroomsCount = 0
+tomatosCount = 0
+while (1):
     i=i+1
-    mushroomsCount = 0
-    tomatosCount = 0
     tempSlice = npPizza[sliceToCut.startRowIndex:(
         sliceToCut.endRowIndex+1), sliceToCut.startColIndex:(sliceToCut.endColIndex+1)]
     print(f'{tempSlice}')
     for rowIndex, rowValue in enumerate(tempSlice):
         for columnIndex, ing in enumerate(rowValue):
-            npPizza[rowIndex+ sliceToCut.startRowIndex][columnIndex+ sliceToCut.startColIndex]="X"
             if (ing == 'T'):
                 tomatosCount += 1
             if (ing == 'M'):
                 mushroomsCount += 1
+            npPizza[rowIndex+ sliceToCut.startRowIndex][columnIndex+ sliceToCut.startColIndex]="X"
     if (mushroomsCount >= taskDefinition.minimumIngr and tomatosCount >= taskDefinition.minimumIngr):
         sliceToCut.ready = True
         break

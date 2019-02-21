@@ -20,6 +20,7 @@ fileNames = [
     "a_example.in",
     "b_small.in",
     "c_medium.in",
+    
     "d_big.in"
 ]
 with open(statementsFolderPath + fileNames[0], 'r') as myfile:
@@ -27,3 +28,4 @@ with open(statementsFolderPath + fileNames[0], 'r') as myfile:
     fileLines = myfile.readlines()
 taskDefinition = getTaskDefinitions(fileLines)
 print(f'{taskDefinition.columns}')
+print(f'{len(fileLines)}')

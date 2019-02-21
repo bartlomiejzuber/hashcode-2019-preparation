@@ -1,13 +1,11 @@
 import math
 import numpy as np
 
-
 class TaskDefinition:
     rows: int
     columns: int
     minimumIngr: int
     maxCells: int
-
 
 class SliceDefinition:
     startRowIndex: int
@@ -16,7 +14,6 @@ class SliceDefinition:
     endColIndex: int
     ready: bool
     rowExtended: bool
-
 
 def getTaskDefinitions(fileLines):
     taskDefinition = TaskDefinition()
@@ -29,7 +26,6 @@ def getTaskDefinitions(fileLines):
     taskDefinition.maxCells = int(taskDefinitionData[3])
     return taskDefinition
 
-
 statementsFolderPath = "C:\HashCodeStatements\\"
 fileNames = [
     "a_example.in",
@@ -37,6 +33,7 @@ fileNames = [
     "c_medium.in",
     "d_big.in"
 ]
+
 with open(statementsFolderPath + fileNames[0], 'r') as myfile:
     # data = myfile.read()
     fileLines = myfile.readlines()
@@ -62,7 +59,7 @@ while (1):
     sliceToCut.endColIndex = 0
     sliceToCut.ready = False
     sliceToCut.rowExtended = False
-    i=0
+    i = 0
     mushroomsCount = 0
     tomatosCount = 0
     while (1):

@@ -63,7 +63,7 @@ while (1):
     mushroomsCount = 0
     tomatosCount = 0
     while (1):
-        i=i+1
+        i = i + 1
         tempSlice = npPizza[sliceToCut.startRowIndex:(
             sliceToCut.endRowIndex+1), sliceToCut.startColIndex:(sliceToCut.endColIndex+1)]
         print(f'{tempSlice}')

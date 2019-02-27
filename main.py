@@ -62,26 +62,49 @@ def prepareResults(slices, fileIndex):
     file.close()
 
 
-def canSliceExtend(slice: SliceDefinition, taskDefinition: TaskDefinition, rowIncr: int, colIncr: int)-> bool:
-    result = True
+def canSliceExtend(
+        slice: SliceDefinition,
+        taskDefinition: TaskDefinition,
+        rowIncr: int,
+        colIncr: int,
+        pizza: np.array = None)-> bool:
     sliceRowsLength = slice.endRowIndex-slice.startRowIndex + rowIncr + 1
     sliceColsLength = slice.endColIndex-slice.startColIndex + colIncr + 1
-    if(sliceRowsLength > taskDefinition.rows):
-        result = False
-    if(sliceColsLength > taskDefinition.columns):
-        result = False
+    if(slice.endRowIndex + 1 + rowIncr > taskDefinition.rows):
+        return False
+    if(slice.endColIndex + 1 + colIncr > taskDefinition.columns):
+        return False
     if(sliceRowsLength * sliceColsLength > taskDefinition.maxCells):
-        result = False
-    return result
+        return False
+    if(pizza is not None):
+        # tempSlice = npPizza[slice.startRowIndex:(
+        #     slice.endRowIndex+rowIncr+1), slice.startColIndex:(slice.endColIndex+colIncr+1)]
+        # for rowIndex, rowValue in enumerate(tempSlice):
+        #     for columnIndex, ing in enumerate(rowValue):
+        #         if (ing == 'X' and (rowIndex > slice.endRowIndex or columnIndex > slice.endColIndex)):
+        #             result = False
+        startRowIndexForExtendCheck =slice.startRowIndex
+        startColIndexForExtendCheck =slice.startColIndex
+        if(rowIncr> 0):
+            startRowIndexForExtendCheck = slice.endRowIndex+rowIncr
+        if(colIncr> 0):
+            startColIndexForExtendCheck = slice.endColIndex+colIncr
+        for rowIndex in range(startRowIndexForExtendCheck,  slice.endRowIndex+rowIncr+1):
+            for columnIndex in range(startColIndexForExtendCheck,slice.endColIndex+colIncr+1):
+                if (npPizza[rowIndex, columnIndex] == 'X'):
+                     return False
+    return True
+
 
 def cutSlice(pizza: np.array, rowIndex, columnIndex, slices, taskDefinition):
     sliceToCut = SliceDefinition(rowIndex, columnIndex)
     i = 0
+    tempPizza = np.copy(pizza)
     mushroomsCount = 0
     tomatosCount = 0
     while (1):
         i = i + 1
-        tempSlice = npPizza[sliceToCut.startRowIndex:(
+        tempSlice = tempPizza[sliceToCut.startRowIndex:(
             sliceToCut.endRowIndex+1), sliceToCut.startColIndex:(sliceToCut.endColIndex+1)]
         for rowIndex, rowValue in enumerate(tempSlice):
             for columnIndex, ing in enumerate(rowValue):
@@ -89,22 +112,38 @@ def cutSlice(pizza: np.array, rowIndex, columnIndex, slices, taskDefinition):
                     tomatosCount += 1
                 if (ing == 'M'):
                     mushroomsCount += 1
-                npPizza[rowIndex + sliceToCut.startRowIndex][columnIndex +
-                                                             sliceToCut.startColIndex] = "X"
+                tempPizza[rowIndex + sliceToCut.startRowIndex][columnIndex +
+                                                               sliceToCut.startColIndex] = "X"
         if (mushroomsCount >= taskDefinition.minimumIngr and tomatosCount >= taskDefinition.minimumIngr):
             sliceToCut.ready = True
             break
         if (sliceToCut.ready == False):
-            if (canSliceExtend(sliceToCut,taskDefinition, 1,0)):
+            if (canSliceExtend(sliceToCut, taskDefinition, 1, 0,tempPizza)):
                 sliceToCut.endRowIndex += 1
        #         sliceToCut.rowExtended = True
-            elif(canSliceExtend(sliceToCut,taskDefinition, 0,1)):
-                    sliceToCut.endColIndex += 1
+            elif(canSliceExtend(sliceToCut, taskDefinition, 0, 1, tempPizza)):
+                sliceToCut.endColIndex += 1
             else:
                 break
           #      sliceToCut.rowExtended = False
-    if(sliceToCut.ready==True):
+    if(sliceToCut.ready == True):
         slices.append(sliceToCut)
+        return tempPizza
+    return pizza
+
+
+def tryExtendSlices(slices, npPizza: np.array):
+    for slice in slices:
+        while(1):
+            if (canSliceExtend(slice, taskDefinition, 1, 0, npPizza)):
+                slice.endRowIndex += 1
+            elif(canSliceExtend(slice, taskDefinition, 0, 1, npPizza)):
+                slice.endColIndex += 1
+            else:
+                for rowIndex in range(slice.startRowIndex, slice.endRowIndex + 1):
+                    for columnIndex in range(slice.startColIndex, slice.endColIndex + 1):
+                        npPizza[rowIndex, columnIndex] = 'X'
+                break
 
 
 fileDataLines = getFilesLines(4)
@@ -117,9 +156,12 @@ for fileIndex, fileLines in enumerate(fileDataLines):
         pizza.append(pizzaLine)
     npPizza = np.array(pizza)
     slices = []
-    for rowIndex, rowValue in enumerate(npPizza):
-        for columnIndex, ing in enumerate(rowValue):
-            if(ing != 'X'):
-                cutSlice(npPizza, rowIndex, columnIndex, slices, taskDefinition)
+    for rowIndex in range(0, taskDefinition.rows):
+        for columnIndex in range(0, taskDefinition.columns):
+            if(npPizza[rowIndex, columnIndex] != 'X'):
+                npPizza = cutSlice(npPizza, rowIndex, columnIndex,
+                                   slices, taskDefinition)
+    print(f'{npPizza}')
+    tryExtendSlices(slices, npPizza)
     print(f'{npPizza}')
     prepareResults(slices, fileIndex)

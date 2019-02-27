@@ -77,12 +77,6 @@ def canSliceExtend(
     if(sliceRowsLength * sliceColsLength > taskDefinition.maxCells):
         return False
     if(pizza is not None):
-        # tempSlice = npPizza[slice.startRowIndex:(
-        #     slice.endRowIndex+rowIncr+1), slice.startColIndex:(slice.endColIndex+colIncr+1)]
-        # for rowIndex, rowValue in enumerate(tempSlice):
-        #     for columnIndex, ing in enumerate(rowValue):
-        #         if (ing == 'X' and (rowIndex > slice.endRowIndex or columnIndex > slice.endColIndex)):
-        #             result = False
         startRowIndexForExtendCheck =slice.startRowIndex
         startColIndexForExtendCheck =slice.startColIndex
         if(rowIncr> 0):
@@ -120,12 +114,10 @@ def cutSlice(pizza: np.array, rowIndex, columnIndex, slices, taskDefinition):
         if (sliceToCut.ready == False):
             if (canSliceExtend(sliceToCut, taskDefinition, 1, 0,tempPizza)):
                 sliceToCut.endRowIndex += 1
-       #         sliceToCut.rowExtended = True
             elif(canSliceExtend(sliceToCut, taskDefinition, 0, 1, tempPizza)):
                 sliceToCut.endColIndex += 1
             else:
                 break
-          #      sliceToCut.rowExtended = False
     if(sliceToCut.ready == True):
         slices.append(sliceToCut)
         return tempPizza

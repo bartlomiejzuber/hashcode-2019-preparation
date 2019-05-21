@@ -2,6 +2,7 @@
 Just our preparation for hashcode coding competition
 
 Google's pizza slice problem
+```
                         ___
                         |  ~~--.
                         |%=@%%/
@@ -21,3 +22,4 @@ Google's pizza slice problem
            \_ ~o%=@%(_)%o%%(_)%~ _/
              `\_~~o%%%o%%%%%~~_/'
                 `--..____,,--'
+```
